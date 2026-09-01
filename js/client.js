@@ -1,4 +1,4 @@
-const socket = io("http://localhost:8000");
+const socket = io("https://real-time-chat-application-production-f09f.up.railway.app");
 
 const form = document.getElementById("send-container");
 const messageInput = document.getElementById("messageInp");
@@ -35,9 +35,7 @@ const append = (message, position) => {
 const playNotification = () => {
     notificationSound.currentTime = 0;
 
-    notificationSound.play().catch(() => {
-        console.log("Notification sound could not play");
-    });
+    notificationSound.play().catch(() => {});
 };
 
 socket.emit("new-user-joined", name);
