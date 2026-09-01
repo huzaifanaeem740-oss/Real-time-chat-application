@@ -1,4 +1,4 @@
-const socket = io("https://real-time-chat-application-production-f09f.up.railway.app");
+const socket = io("https:bubbly-mindfulness-production-fdce.up.railway.app");
 
 const form = document.getElementById("send-container");
 const messageInput = document.getElementById("messageInp");
