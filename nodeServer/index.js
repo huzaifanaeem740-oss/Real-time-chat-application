@@ -1,4 +1,8 @@
-const io = require("socket.io")(8000, {
+const { Server } = require("socket.io");
+
+const port = process.env.PORT || 8000;
+
+const io = new Server(port, {
     cors: {
         origin: "*",
         methods: ["GET", "POST"]
@@ -8,15 +12,11 @@ const io = require("socket.io")(8000, {
 const users = {};
 
 io.on("connection", socket => {
-
-    // New user joined
     socket.on("new-user-joined", name => {
         users[socket.id] = name;
-
         socket.broadcast.emit("user-joined", name);
     });
 
-    // Receive message
     socket.on("send", message => {
         socket.broadcast.emit("receive", {
             message: message,
@@ -24,7 +24,6 @@ io.on("connection", socket => {
         });
     });
 
-    // User disconnected
     socket.on("disconnect", () => {
         if (users[socket.id]) {
             socket.broadcast.emit("left", users[socket.id]);
@@ -32,3 +31,6 @@ io.on("connection", socket => {
         }
     });
 });
+
+console.log(`Server running on port ${port}`);
+
